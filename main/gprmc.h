@@ -23,6 +23,9 @@
 
 #include <string>
 
+void dms_format(double degrees, char *buf );
+
+
 class GPRMC
 {
 public:
@@ -33,9 +36,7 @@ public:
 private:
 
   std::string sentence;
-  uint calcCheckSum (int pos, const std::string& sentence);
-  char * dmshh_format_lat(double degrees);
-  char * dmshh_format_lon(double degrees);
+
 
 };
 

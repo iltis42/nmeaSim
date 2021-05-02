@@ -132,7 +132,6 @@ void Serial::routerTask(void *pvParameters){
 		Router::routeWLAN();
 		Router::routeS1();
 		Router::routeS2();
-		BTSender::progress();   // piggyback this here, saves one task for BT sender
 		vTaskDelay( HEARTBEAT_PERIOD_MS_SERIAL/portTICK_PERIOD_MS );  // 48 bytes each 20 mS traffic at 19.200 baud
 	}
 }

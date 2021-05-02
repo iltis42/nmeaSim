@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "gpgga.h"
+#include "gprmc.h"
 #include <iostream>
 #include <cstdio>
 #include <unistd.h>
@@ -34,56 +35,35 @@ GPGGA::GPGGA()
 {
 }
 
-char * GPGGA::dmshh_format_lat(double degrees)
-{
-  static char buf[16];
-  int deg_part;
-  double min_part;
 
-  if( degrees < 0 )
-    {
-      degrees = -degrees;
-    }
-
-  deg_part = (int) degrees;
-  min_part = 60.0 * (degrees - deg_part);
-
-  sprintf( buf, "%02d%07.4f", deg_part, min_part );
-
-  return buf;
-}
-
-char * GPGGA::dmshh_format_lon(double degrees)
-{
-  static char buf[16];
-  int deg_part;
-  double min_part;
-
-  if( degrees < 0 )
-    {
-      degrees = -degrees;
-    }
-
-  deg_part = (int) degrees;
-  min_part = 60.0 * (degrees - deg_part);
-
-  sprintf( buf, "%03d%07.4f", deg_part, min_part );
-
-  return buf;
-}
 
 
 // Example of GPGGA:
 // $GPGGA,223031.803,5228.1139,N,01334.0933,E,1,10,00.8,35.3,M,39.8,M,,*53
+/*
+llll.ll = latitude of position
+a = N or S
+yyyyy.yy = Longitude of position
+a = E or W
+
+*/
+
 int GPGGA::send( double lat, double lon, float altitude, int fd )
 {
-  char sentence[80];
+  char sentence[160];
   uint64_t rts = esp_timer_get_time();
-  float time = rts/1000000.0;   // in seconds
+  int time = (int)(rts/1000000.0);   // in seconds
+  int time_h = (time/3600)%24;
+  int time_m = (time/60)%60;
+  int time_s = time%60;
    //  std::string utcTime = dateTimeUtc.time().toString("hhmmss.zzz");
+  char dms_lat[10];
+  char dms_lon[10];
+  dms_format( lat, dms_lat );
+  dms_format( lon, dms_lon );
 
-  sprintf( sentence, "$GPGGA,%6.3f,%s,%c,%s,%c,1,08,2.1,%.1f,M,,,,0000",
-		  time,  dmshh_format_lat( lat ), lat > 0 ? 'N' : 'S', dmshh_format_lon( lon ), lon > 0 ? 'E' : 'W', altitude );
+  sprintf( sentence, "$GPGGA,%02d%02d%02d,%s,%c,%s,%c,1,08,1.1,%.1f,M,,,,0000",
+		  time_h, time_m, time_s,  dms_lat, lat > 0 ? 'N' : 'S', dms_lon, lon > 0 ? 'E' : 'W', altitude );
 
   uint sum = Protocols::getCheckSum( sentence );
   int i = strlen(sentence);

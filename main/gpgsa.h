@@ -1,8 +1,8 @@
 /***************************************************************************
-                          gpgga.h  -  description
+                          gpgsa.h  -  description
                              -------------------
-    begin                : 23.12.2003
-    copyright            : (C) 2003 by Eckhard Völlm
+    begin                : 24.10.2009
+    copyright            : (C) 2009 by Axel Pauli
     email                : kflog.cumulus@gmail.com
 
     $Id$
@@ -18,22 +18,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef GPGGA_H_
-#define GPGGA_H_
+#ifndef GPGSA_H_
+#define GPGSA_H_
 
-#include <string>
+  /**
+  GSA - GPS DOP and active satellites
 
-class GPGGA
+          1 2 3                    14 15  16  17  18
+          | | |                    |  |   |   |   |
+   $--GSA,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x.x,x.x*hh<CR><LF>
+
+   Field Number:
+    1) Selection mode
+    2) Mode
+    3) ID of 1st satellite used for fix
+    4) ID of 2nd satellite used for fix
+    ...
+    14) ID of 12th satellite used for fix
+    15) PDOP in meters
+    16) HDOP in meters
+    17) VDOP in meters
+    18) checksum
+   */
+
+// $GPGSA,A,3,14,32,17,20,11,23,28,,,,,,1.7,1.1,1.2*3C
+
+class GPGSA
 {
 
 public:
 
-  GPGGA();
-  int send( double lat, double lon, float altitude, int fd );
+  GPGSA();
+
+  int send();
 
 private:
-
-  std::string sentence;
 
 };
 

@@ -20,7 +20,7 @@ public:
   bool selfTest();         // call 3 seconds after begin
 
 private:
-
+   static void routerTask(void *pvParameters);
    static BluetoothSerial *SerialBT;
 
 };

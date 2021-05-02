@@ -35,7 +35,6 @@ public:
 
 private:
 
-  uint calcCheckSum (int pos, const std::string& sentence);
 };
 
 #endif /* PGRMZ_H_ */

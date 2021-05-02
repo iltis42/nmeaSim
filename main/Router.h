@@ -16,7 +16,7 @@
  */
 
 
-#define QUEUE_SIZE 5
+#define QUEUE_SIZE 15
 
 extern RingBufCPP<SString, QUEUE_SIZE> wl_vario_tx_q;
 extern RingBufCPP<SString, QUEUE_SIZE> wl_flarm_tx_q;

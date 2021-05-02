@@ -77,15 +77,19 @@ void BTSender::progress(){
 void BTSender::begin(){
 	ESP_LOGI(FNAME,"BTSender::begin()" );
 	if( blue_enable.get() == WL_BLUETOOTH ) {
-		 ESP_LOGI(FNAME,"BT on, create BT master object" );
+		 ESP_LOGI(FNAME,"BT on, create BT master object, BT-ID: %s", SetupCommon::getID());
 		 SerialBT = new BluetoothSerial();
 		 SerialBT->begin(SetupCommon::getID() );
-		 /*
-		 if (esp_bredr_tx_power_set(ESP_PWR_LVL_N12, ESP_PWR_LVL_N6) != ESP_OK)
-		   {
-			 ESP_LOGI(FNAME,"esp_bredr_tx_power_set failed");
-		   };
-		 */
+
+		xTaskCreatePinnedToCore(&BTSender::routerTask, "routerTask", 4096, NULL, 29, 0, 0);
+	}
+}
+
+
+void BTSender::routerTask(void *pvParameters){
+	while(1) {
+		BTSender::progress();   // piggyback this here, saves one task for BT sender
+		vTaskDelay( 20/portTICK_PERIOD_MS );  // 48 bytes each 20 mS traffic at 19.200 baud
 	}
 }
 

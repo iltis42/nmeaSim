@@ -208,7 +208,7 @@ protected:
 */
 inline size_t getTail() const
 {
-    return (_head + (MaxElements - _numElements))%MaxElements;
+    return (_head - _numElements)%MaxElements;
 }
 
 

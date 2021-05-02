@@ -1,8 +1,8 @@
 /***************************************************************************
-                          pgrmz.cpp - description
+                          gpgsa.cpp  -  description
                              -------------------
-    begin                : 02.08.2010
-    copyright            : (C) 2010-2013 by Axel Pauli
+    begin                : 24.10.2009
+    copyright            : (C) 2009-2013 by Axel Pauli
     email                : kflog.cumulus@gmail.com
 
     $Id$
@@ -18,38 +18,66 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <iostream>
-#include <cstdio>
 #include <unistd.h>
+#include <iostream>
 
-#include "pgrmz.h"
-#include "Protocols.h"
+#include "gpgsa.h"
 #include "Router.h"
+#include "Protocols.h"
 
 using namespace std;
 
-PGRMZ::PGRMZ()
+
+GPGSA::GPGSA()
 {
 }
 
 /**
-  Used by Garmin and Flarm devices
-  $PGRMZ,93,f,3*21
-         93,f         Altitude in feet
-         3            Position fix dimensions 2 = FLARM barometric altitude
-                                              3 = GPS altitude
+GSA - GPS DOP and active satellites
 
-  Flarm example: $PGRMZ,2963,F,2*04
+        1 2 3                    14 15  16  17  18
+        | | |                    |  |   |   |   |
+ $--GSA,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x.x,x.x*hh<CR><LF>
 
-  Input parameter altitude is expected as meters.
+ Field Number:
+  1) Selection mode
+  2) Mode
+  3) ID of 1st satellite used for fix
+  4) ID of 2nd satellite used for fix
+  ...
+  14) ID of 12th satellite used for fix
+  15) PDOP in meters
+  16) HDOP in meters
+  17) VDOP in meters
+  18) checksum
+
+1    = Mode:
+       M=Manual, forced to operate in 2D or 3D
+       A=Automatic, 3D/2D
+2    = Mode:
+       1=Fix not available
+       2=2D
+       3=3D
+
+15   = PDOP
+16   = HDOP
+17   = VDOP
+
 */
-int PGRMZ::send( float altitude, int fd )
+
+// $GPGSA,A,3,14,32,17,20,11,23,28,,,,,,1.7,1.1,1.2*3C
+
+int GPGSA::send()
 {
   char sentence[80];
-  sprintf(sentence,"$PGRMZ,%d,F,2", (int)(altitude*3.28095 + 0.5) );
+  sprintf( sentence, "%s", "$GPGSA,A,3,14,32,17,20,11,23,28,33,,,,,1.3,1.1,1.2" );
+
   uint sum = Protocols::getCheckSum( sentence );
   int i = strlen(sentence);
   sprintf( &sentence[i], "*%02X\r\n", sum );
   Router::sendNMEA( sentence );
   return strlen( sentence );
+
 }
+
+
