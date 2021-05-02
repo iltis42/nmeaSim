@@ -62,11 +62,11 @@ bool Router::pullMsg( RingBufCPP<SString, QUEUE_SIZE>& q, SString& s ){
 }
 
 // XCVario Router
-void Router::sendXCV(char * s){
+void Router::sendNMEA(char * s){
 	// ESP_LOGV( FNAME,"XCVario message %s",s);
 	SString xcv( s );
-	if( forwardMsg( xcv, xcv_rx_q ) )
-		ESP_LOGV(FNAME,"Received %d bytes from XCV", xcv.length() );
+	if( forwardMsg( xcv, s1_rx_q ) )
+		ESP_LOGV(FNAME,"Received %d bytes from NMEA for S1", xcv.length() );
 }
 
 

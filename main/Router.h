@@ -4,6 +4,9 @@
 // #include <btstack.h>
 #include <esp_log.h>
 #include <string>
+#include "RingBufCPP.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 /*
  *   Router for XCVario, to interconnect wireless (Bluetooth or WLAN), XCVario and serial S1,S2 interfaces
@@ -55,7 +58,7 @@ public:
   static void routeBT();
 
   // add messages from XCVario to Router
-  static void sendXCV(char * s);
+  static void sendNMEA(char * s);
 
 private:
 

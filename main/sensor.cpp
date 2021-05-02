@@ -33,6 +33,8 @@
 #include "esp32-hal-adc.h" // needed for adc pin reset
 #include "soc/sens_reg.h" // needed for adc pin reset
 #include "driver/gpio.h"
+#include "glider.h"
+#include "nmeasim.h"
 
 OTA *ota = 0;
 BTSender btsender;
@@ -91,6 +93,9 @@ extern "C" void  app_main(void){
 	SetupCommon::initSetup( setupPresent );
 	esp_log_level_set("*", ESP_LOG_INFO);
 	sensor( 0 );
+
+    nmeasim();
+
 	vTaskDelete( NULL );
 }
 
