@@ -66,7 +66,7 @@ void Router::sendNMEA(char * s){
 	// ESP_LOGV( FNAME,"XCVario message %s",s);
 	SString xcv( s );
 	if( forwardMsg( xcv, s1_rx_q ) )
-		ESP_LOGI(FNAME,"Forward %d bytes from NMEA", xcv.length() );
+		ESP_LOGV(FNAME,"Forward %d bytes from NMEA", xcv.length() );
 	else
 		ESP_LOGW(FNAME,"Dropped %d bytes from NMEA", xcv.length() );
 }
@@ -76,7 +76,7 @@ void Router::sendNMEA(char * s){
 void Router::routeS1(){
 	SString s1;
 	if( pullMsg( s1_rx_q, s1) ){
-		ESP_LOGI(FNAME,"S1 RX len: %d bytes, BT-Q full:%d", s1.length(), bt_tx_q.isFull() );
+		ESP_LOGV(FNAME,"S1 RX len: %d bytes, BT-Q full:%d", s1.length(), bt_tx_q.isFull() );
 		// ESP_LOG_BUFFER_HEXDUMP(FNAME,s1.c_str(),s1.length(), ESP_LOG_DEBUG);
 		// Protocols::parseNMEA( s1.c_str() );
 
@@ -85,19 +85,19 @@ void Router::routeS1(){
 			// ESP_LOGI(FNAME,"WIRELESS enabled");
 			if( blue_enable.get() == WL_WLAN ){
 				if( forwardMsg( s1, wl_vario_tx_q ))
-					ESP_LOGI(FNAME,"S1 RX bytes %d forward to wl_vario_tx_q port 8880", s1.length() );
+					ESP_LOGV(FNAME,"S1 RX bytes %d forward to wl_vario_tx_q port 8880", s1.length() );
 			}
 			else if( blue_enable.get() == WL_BLUETOOTH ){
-				ESP_LOGI(FNAME,"WL_BLUETOOTH enabled send %d", s1.length()  );
+				ESP_LOGV(FNAME,"WL_BLUETOOTH enabled send %d", s1.length()  );
 				if( forwardMsg( s1, bt_tx_q ))
-					ESP_LOGI(FNAME,"S1 RX bytes %d forward to bt_tx_q", s1.length() );
+					ESP_LOGV(FNAME,"S1 RX bytes %d forward to bt_tx_q", s1.length() );
 				else
-					ESP_LOGI(FNAME,"Dropped bytes %d forward to bt_tx_q", s1.length() );
+					ESP_LOGW(FNAME,"Dropped bytes %d forward to bt_tx_q", s1.length() );
 			}
 		}
 		if( serial1_route.get() & RT_SERIAL ){
 			if( forwardMsg( s1, s1_tx_q ))
-				ESP_LOGI(FNAME,"S1 RX bytes %d forward to s1_tx_q", s1.length() );
+				ESP_LOGV(FNAME,"S1 RX bytes %d forward to s1_tx_q", s1.length() );
 		}
 	}
 }

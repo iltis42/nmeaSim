@@ -161,13 +161,14 @@ void glider::Circle()
 	cout << "Wind Dir (From):   " << wDir << endl;
 
 	// heading uses to change during circle
+	cout << "Initial Heading:   " << heading << endl;
 	heading += courseChg;
 
 	if( heading > 360 )
 	{
 		heading -= 360;
 	}
-
+	cout << "Changed Heading:   " << heading << endl;
 	// Calculate new glider vector
 	Vector gVec( (double)heading*M_PI/180, Speed( speed*1000/3600 ) );
 	cout << "Speed (no wind)  : " << gVec.getSpeed().getKph() << endl;
@@ -182,8 +183,11 @@ void glider::Circle()
 	double yDelta = gVec.getY().getKnots()/(3600*60.0); // this is Y in vector
 	double xDelta = (gVec.getX().getKnots()/(3600*60.0)) /cos(lat*M_PI/180.0);
 
-	// cout << yDelta << endl;
-	// cout << xDelta << endl;
+	yDelta += wVec.getY().getKnots()/(3600*60.0); // this is Y in vector
+	xDelta += (wVec.getX().getKnots()/(3600*60.0)) /cos(lat*M_PI/180.0);
+
+	cout << yDelta << endl;
+	cout << xDelta << endl;
 
 	lon += xDelta;  // Länge
 	lat += yDelta;  // Breite

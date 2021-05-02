@@ -24,7 +24,6 @@
 
 #include "speed.h"
 
-// #define PI M_PI
 #define PI2 2*M_PI
 
 /**

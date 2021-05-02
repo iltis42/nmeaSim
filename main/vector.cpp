@@ -34,8 +34,8 @@ Vector::Vector() :
 }
 
 double Vector::normalize(double angle) {
-    if (angle<0) return normalize(angle+M_PI_2);
-    if (angle>=M_PI_2) return normalize(angle-M_PI_2);
+    if (angle<0) return normalize(angle+PI2);
+    if (angle>=PI2) return normalize(angle-PI2);
     return angle;
 }
 
@@ -56,9 +56,9 @@ double Vector::polar(double y, double x)
     else  angle = atan( y / x );
 
     // Neg. value not allowed.
-    if(angle < 0.0)  angle = M_PI_2 + angle;
+    if(angle < 0.0)  angle = PI2 + angle;
 
-    if(angle > (M_PI_2))  angle = angle - (M_PI_2);
+    if(angle > (PI2))  angle = angle - (PI2);
 
     return angle;
 }
@@ -293,6 +293,8 @@ void Vector::add(Vector& arg){
   // qDebug("_y %f", _y );
 
   dirtyDR=true;
+  recalcDR();
+  recalcXY();
 }
 
 /** Returns a copy of the object */

@@ -31,11 +31,12 @@ using namespace std;
 void dms_format(double lat, char *buf)
 {
 
-  int degree = (int)lat;
-  int minutes = (int) ( (lat - (double)degree) * 60.0);
-  int seconds = (int) ( (lat - (double)degree - (double)minutes / 60.0) * 60.0 * 60.0 );
+  int deg = (int)lat;
+  double minutes = (lat - (double)(deg)) * 60;
+  // int min = (int)minutes;
+  // int sec = (int)((minutes - (double)min )*100);
 
-  sprintf( buf, "%02d%02d.%02d", degree, minutes, seconds );
+  sprintf( buf, "%02d%02.2f", deg, minutes );
 }
 
 
