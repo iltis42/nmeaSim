@@ -45,7 +45,7 @@ void Serial::serialHandlerS1(void *pvParameters){
 		if ( !s1_tx_q.isEmpty() && Serial1.availableForWrite() ){
 			ESP_LOGD(FNAME,"Serial Data and avail");
 			while( Router::pullMsg( s1_tx_q, s ) ) {
-				ESP_LOGD(FNAME,"Serial 1 TX len: %d bytes", s.length() );
+				ESP_LOGI(FNAME,"Serial 1 TX len: %d bytes, MSG: %s", s.length(), s.c_str() );
 				// ESP_LOG_BUFFER_HEXDUMP(FNAME,s.c_str(),s.length(), ESP_LOG_DEBUG);
 				int wr = Serial1.write( s.c_str(), s.length() );
 				ESP_LOGI(FNAME,"Serial 1 TX written: %d", wr);

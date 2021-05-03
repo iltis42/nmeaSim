@@ -23,6 +23,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <HardwareSerial.h>
 
 #include "glider.h"
 
@@ -186,15 +187,15 @@ void glider::Circle()
 	yDelta += wVec.getY().getKnots()/(3600*60.0); // this is Y in vector
 	xDelta += (wVec.getX().getKnots()/(3600*60.0)) /cos(lat*M_PI/180.0);
 
-	cout << yDelta << endl;
-	cout << xDelta << endl;
+	// cout << yDelta << endl;
+	// cout << xDelta << endl;
 
 	lon += xDelta;  // Länge
 	lat += yDelta;  // Breite
 
 	altitude+=climb;
 	double speedWind = gVec.getSpeed().getKnots();
-	// myGPGGA.send( lat,lon, altitude, myFd);
+	myGPGGA.send( lat,lon, altitude, myFd);
 	myPGRMZ.send( altitude, myFd );
 	myGPRMC.send( lat,lon, speedWind, angW, myFd);
 	myGPGSA.send();
