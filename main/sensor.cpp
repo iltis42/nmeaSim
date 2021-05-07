@@ -94,7 +94,12 @@ extern "C" void  app_main(void){
 	esp_log_level_set("*", ESP_LOG_INFO);
 	sensor( 0 );
 
-    nmeasim();
+	float heading=0;
+	while( 1 ){
+		nmeasim( "cir", 180, 25, 90, heading );  // circle 3 min
+		nmeasim( "str", 180, 25, 90, heading );  // the fly straight 3 min
+		// heading += 45;
+	}
 
 	vTaskDelete( NULL );
 }

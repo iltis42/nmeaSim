@@ -22,5 +22,5 @@
 
 #include <string>
 
-void nmeasim(float wind=25.0, float winddir=270.0, std::string mode="cir" );
+void nmeasim(std::string mode, int time, float wind, float winddir, float heading );
 

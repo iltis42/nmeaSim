@@ -41,13 +41,15 @@ static    float  climb=0.0;       // default climb rate zero
 static    int    delaytime=1000;      // default pause is 1000ms
 
 
-
-void nmeasim(float wind, float winddir, std::string mode )
+//
+void nmeasim( std::string mode, int time, float wind, float winddir, float aHeading  )
 {
-
-  glider myGl( lat, lon, speed, heading, wind, winddir, altitude, climb );
+  winddir += 180;
+  if( winddir > 360 )
+	  winddir -= 360;
+  glider myGl( lat, lon, speed, aHeading, wind, winddir, altitude, climb );
   myGl.setCircle( radius, direction );
-
+  int loops = 0;
   while( 1 )
     {
       if( mode == "str" )
@@ -59,6 +61,9 @@ void nmeasim(float wind, float winddir, std::string mode )
       if( mode == "gpos" )
         myGl.FixedPosGround();
       delay( delaytime );
+      loops++;
+      if( loops > time )
+    	  break;
     }
 }
 
