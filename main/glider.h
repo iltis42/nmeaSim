@@ -26,6 +26,7 @@
 #include "gprmc.h"
 #include "pgrmz.h"
 #include "gpgsa.h"
+#include "xcvxc.h"
 
 class glider
 {
@@ -34,7 +35,7 @@ public:
 
   glider( double &lat, double &lon, float &speed, float &heading, float wind, float winddir, float &altitude, float climb );
   void setFd( int fd );
-  void Straight();
+  void Straight( bool sim_heading=false );
   void setCircle( float radius, std::string direction );
   void Circle();
   void FixedPos();
@@ -47,6 +48,7 @@ private:
   GPRMC myGPRMC;
   PGRMZ myPGRMZ;
   GPGSA myGPGSA;
+  XCVXC myXCVXC;
   double &lat;
   double &lon;
   float  &speed;

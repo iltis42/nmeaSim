@@ -47,6 +47,9 @@ void nmeasim( std::string mode, int time, float wind, float winddir, float aHead
   winddir += 180;
   if( winddir > 360 )
 	  winddir -= 360;
+  aHeading += 180;
+  if( aHeading > 360 )
+	  aHeading -= 360;
   glider myGl( lat, lon, speed, aHeading, wind, winddir, altitude, climb );
   myGl.setCircle( radius, direction );
   int loops = 0;
@@ -54,6 +57,8 @@ void nmeasim( std::string mode, int time, float wind, float winddir, float aHead
     {
       if( mode == "str" )
         myGl.Straight();
+      if( mode == "str_head" )
+         myGl.Straight( true );
       if( mode == "cir" )
         myGl.Circle();
       if( mode == "pos" )

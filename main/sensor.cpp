@@ -95,10 +95,14 @@ extern "C" void  app_main(void){
 	sensor( 0 );
 
 	float heading=0;
+	nmeasim( "cir", 180, 25, 90, heading );  // circle 3 min
+	// nmeasim( "cir", 180, 20, 110, heading );  // circle 3 min
+	// nmeasim( "cir", 180, 15, 270, heading );  // circle 3 min
+
 	while( 1 ){
-		nmeasim( "cir", 180, 25, 90, heading );  // circle 3 min
-		nmeasim( "str", 180, 25, 90, heading );  // the fly straight 3 min
-		// heading += 45;
+		nmeasim( "str_head", 120, 25, 90, heading );  // the fly straight 3 min
+		heading += 45;
+		heading = Vector::normalizeDeg( heading );
 	}
 
 	vTaskDelete( NULL );

@@ -88,7 +88,7 @@ void glider::FixedPosGround()
 	myGPGSA.send();
 }
 
-void glider::Straight()
+void glider::Straight( bool sim_heading )
 {
 	cout << heading << " " << speed << endl;
 
@@ -129,6 +129,11 @@ void glider::Straight()
 	myPGRMZ.send( altitude, myFd );
 	myGPRMC.send( lat, lon, speed, head, myFd );
 	myGPGSA.send();
+	myGPGGA.send( lat, lon, altitude, myFd );
+	myGPGGA.send( lat, lon, altitude, myFd );
+	myGPGGA.send( lat, lon, altitude, myFd );
+	if( sim_heading )
+		myXCVXC.send( heading + 4 );
 }
 
 void glider::setCircle(float radius, std::string direction )
@@ -199,6 +204,12 @@ void glider::Circle()
 	myPGRMZ.send( altitude, myFd );
 	myGPRMC.send( lat,lon, speedWind, angW, myFd);
 	myGPGSA.send();
-
+	myGPGSA.send();
+	myGPGSA.send();
+	myGPGSA.send();
+	myGPGSA.send();
+	myGPGSA.send();
+	myGPGSA.send();
+	myGPGSA.send();
 }
 

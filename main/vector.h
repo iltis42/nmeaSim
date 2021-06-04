@@ -48,6 +48,7 @@ class Vector : public Speed
     Vector(double angle, Speed R);
     double polar(double y, double x);
     double normalize(double angle);
+    static double normalizeDeg(double angle);
 
     ~Vector();
     /**

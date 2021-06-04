@@ -89,6 +89,16 @@ Vector::Vector(double angle, Speed R){
 Vector::~Vector(){
 }
 
+double Vector::normalizeDeg(double angle)
+{
+	float a=angle;
+	while( a < 0.0 )
+		a += 360.0;
+	while( a >= 360.0 )
+		a -= 360.0;
+	return a;
+}
+
 /** Read property of int angle. */
 float Vector::getAngleDeg() {
     if (dirtyDR) recalcDR();
