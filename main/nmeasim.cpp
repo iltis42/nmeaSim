@@ -42,7 +42,7 @@ static    int    delaytime=1000;      // default pause is 1000ms
 
 
 //
-void nmeasim( std::string mode, int time, float wind, float winddir, float aHeading  )
+void nmeasim( std::string mode, int time, float wind, float winddir, float aHeading, float jitter  )
 {
   winddir += 180;
   if( winddir > 360 )
@@ -50,7 +50,7 @@ void nmeasim( std::string mode, int time, float wind, float winddir, float aHead
   aHeading += 180;
   if( aHeading > 360 )
 	  aHeading -= 360;
-  glider myGl( lat, lon, speed, aHeading, wind, winddir, altitude, climb );
+  glider myGl( lat, lon, speed, aHeading, wind, winddir, altitude, climb, jitter );
   myGl.setCircle( radius, direction );
   int loops = 0;
   while( 1 )

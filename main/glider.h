@@ -33,13 +33,14 @@ class glider
 
 public:
 
-  glider( double &lat, double &lon, float &speed, float &heading, float wind, float winddir, float &altitude, float climb );
+  glider( double &lat, double &lon, float &speed, float &heading, float wind, float winddir, float &altitude, float climb, float jitter );  // jitter in %
   void setFd( int fd );
   void Straight( bool sim_heading=false );
   void setCircle( float radius, std::string direction );
   void Circle();
   void FixedPos();
   void FixedPosGround();
+  float random();
 
 private:
 
@@ -63,6 +64,7 @@ private:
   double ctime;
   double courseChg;
   int tick;
+  float myjitter;
 };
 
 #endif

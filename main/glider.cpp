@@ -29,6 +29,11 @@
 
 using namespace std;
 
+float glider::random() {
+  float random = 2*((float)rand() / ((float)RAND_MAX + 1) - 0.5);
+  return( (100 + random * myjitter )/100 );
+}
+
 glider::glider(double &alat,
 		double &alon,
 		float &aspeed,
@@ -36,7 +41,9 @@ glider::glider(double &alat,
 		float awind,
 		float awinddir,
 		float &aaltitude,
-		float aclimb ) :
+		float aclimb,
+		float jitter
+		) :
 		  lat (alat),
 		  lon(alon),
 		  speed(aspeed),
@@ -53,6 +60,7 @@ glider::glider(double &alat,
 	circle = 0;
 	myFd = 0;
 	courseChg = 0;
+	myjitter = jitter;
 }
 
 void glider::setFd( int fd )
@@ -120,8 +128,11 @@ void glider::Straight( bool sim_heading )
 	// cout << cos(lat*PI/180.0) << endl;
 	// cout << xDelta*60*1.852*3600*cos(lat*PI/180.0)  << endl;
 	// cout << yDelta*60*1.852*3600 << endl;
-	double speed = gVec.getSpeed().getKnots();
-	double head = gVec.getAngleDeg();
+
+	float rnd = random();
+	printf("Random %f\n", rnd );
+	double speed = gVec.getSpeed().getKnots() * rnd;
+	double head = Vector::normalizeDeg( gVec.getAngleDeg() * (( (rnd - 1.0)/3.0) + 1) );
 	lon += xDelta; // Länge
 	lat += yDelta; // Breite
 	altitude += climb;
@@ -185,7 +196,9 @@ void glider::Circle()
 	cout << "Speed:             " << gVec.getSpeed().getKph() << endl;
 	cout << "Heading:           " << gVec.getAngleDeg() << endl;
 
-	double angW = gVec.getAngleDeg();
+	float rnd = random();
+	printf("Random %f\n", rnd );
+	double angW = Vector::normalizeDeg( gVec.getAngleDeg() * (( (rnd - 1.0)/3.0) + 1) );
 	double yDelta = gVec.getY().getKnots()/(3600*60.0); // this is Y in vector
 	double xDelta = (gVec.getX().getKnots()/(3600*60.0)) /cos(lat*M_PI/180.0);
 
@@ -199,7 +212,7 @@ void glider::Circle()
 	lat += yDelta;  // Breite
 
 	altitude+=climb;
-	double speedWind = gVec.getSpeed().getKnots();
+	double speedWind = gVec.getSpeed().getKnots() * rnd;
 	myGPGGA.send( lat,lon, altitude, myFd);
 	myPGRMZ.send( altitude, myFd );
 	myGPRMC.send( lat,lon, speedWind, angW, myFd);
