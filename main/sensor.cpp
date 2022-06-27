@@ -35,6 +35,9 @@
 #include "driver/gpio.h"
 #include "glider.h"
 #include "nmeasim.h"
+#include "spline.h"
+#include <map>
+
 
 OTA *ota = 0;
 BTSender btsender;
@@ -86,6 +89,10 @@ void sensor(void *args){
 
 }
 
+float randHeading(){
+	return 360*((float)rand() / ((float)RAND_MAX + 1));
+}
+
 extern "C" void  app_main(void){
 	ESP_LOGI(FNAME,"app_main" );
 	ESP_LOGI(FNAME,"Now init all Setup elements");
@@ -94,7 +101,35 @@ extern "C" void  app_main(void){
 	esp_log_level_set("*", ESP_LOG_INFO);
 	sensor( 0 );
 
+	std::vector<double> X;
+	std::vector<double> Y;
+
+	X = { -135,- 90, -45,  0, 45, 90, 135, 180, 225, 270,  315, 360, 405, 450 };
+	Y = { -4.2,  -6,-4.2,  0, 4.2, 6, 4.2,   0,-4.2,  -6, -4.2,   0, 4.2,   6 };
+	tk::spline dev(X,Y, tk::spline::cspline_hermite );
+
+	float heading = 0;
+
 	while( 1 ){
+		nmeasim( "cir", 120, 25, 90,   0,  0, 0  );
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+
+		/*
 		nmeasim( "cir", 180, 25, 90,   0,  0, 0    );  // circle 3 min, no deviation
 		nmeasim( "str_head", 120, 25, 90,  0, 0, 0    );  // the fly N straight 3 min
 		nmeasim( "str_head", 120, 25, 90, 45, 0, 4.2  );  // the fly NE straight 3 min
@@ -104,7 +139,10 @@ extern "C" void  app_main(void){
 		nmeasim( "str_head", 120, 25, 90,225, 0, -4.2 );  // the fly SW straight 3 min
 		nmeasim( "str_head", 120, 25, 90,270, 0, -6   );  // the fly W straight 3 min
 		nmeasim( "str_head", 120, 25, 90,315, 0, -4.2 );  // the fly NW straight 3 min
+		*/
 	}
+
+
 
 	vTaskDelete( NULL );
 }

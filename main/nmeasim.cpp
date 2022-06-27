@@ -47,7 +47,7 @@ void nmeasim( std::string mode, int time, float wind, float winddir, float aHead
   winddir += 180;
   if( winddir > 360 )
 	  winddir -= 360;
-  aHeading += 180;
+  // aHeading += 180;
   if( aHeading > 360 )
 	  aHeading -= 360;
   glider myGl( lat, lon, speed, aHeading, wind, winddir, altitude, climb, jitter, deviation );
