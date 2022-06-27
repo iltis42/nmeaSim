@@ -110,24 +110,33 @@ extern "C" void  app_main(void){
 
 	float heading = 0;
 
+	ESP_LOGI(FNAME,"0: %f", dev(0));
+	ESP_LOGI(FNAME,"45: %f", dev(45));
+	ESP_LOGI(FNAME,"90: %f", dev(90));
+	ESP_LOGI(FNAME,"135: %f", dev(135));
+	ESP_LOGI(FNAME,"180: %f", dev(180));
+	ESP_LOGI(FNAME,"225: %f", dev(225));
+	ESP_LOGI(FNAME,"270: %f", dev(270));
+
+
 	while( 1 ){
 		nmeasim( "cir", 120, 25, 90,   0,  0, 0  );
 		heading = randHeading();
-		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading )  );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading )  );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, (float)heading,  0, 0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 
 		/*
 		nmeasim( "cir", 180, 25, 90,   0,  0, 0    );  // circle 3 min, no deviation
