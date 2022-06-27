@@ -28,7 +28,7 @@ class XCVXC
 public:
 
   XCVXC();
-  int send( float course );
+  int send( float course, float speed );
 
 private:
 

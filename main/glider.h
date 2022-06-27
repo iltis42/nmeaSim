@@ -33,7 +33,7 @@ class glider
 
 public:
 
-  glider( double &lat, double &lon, float &speed, float &heading, float wind, float winddir, float &altitude, float climb, float jitter );  // jitter in %
+  glider( double &lat, double &lon, float &speed, float &heading, float wind, float winddir, float &altitude, float climb, float jitter, float deviation );  // jitter in %
   void setFd( int fd );
   void Straight( bool sim_heading=false );
   void setCircle( float radius, std::string direction );
@@ -65,6 +65,7 @@ private:
   double courseChg;
   int tick;
   float myjitter;
+  float mydeviation;
 };
 
 #endif

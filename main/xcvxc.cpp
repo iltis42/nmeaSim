@@ -56,10 +56,10 @@ $XCVXC,223030.803,A,5228.1139,N,01334.0933,E,0.00,329.74,251009,,,A*6A
  *
  *
  */
-int XCVXC::send( float course )
+int XCVXC::send( float course, float speed )
 {
 	char sentence[80];
-	sprintf( sentence,"!xc,%3.2f", course );
+	sprintf( sentence,"!xc,%3.2f,%3.2f", course, speed );
 
 	uint sum = Protocols::getCheckSum( sentence );
 	int i = strlen(sentence);

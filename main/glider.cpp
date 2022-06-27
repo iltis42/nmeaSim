@@ -42,7 +42,8 @@ glider::glider(double &alat,
 		float awinddir,
 		float &aaltitude,
 		float aclimb,
-		float jitter
+		float jitter,
+		float deviation
 		) :
 		  lat (alat),
 		  lon(alon),
@@ -61,6 +62,7 @@ glider::glider(double &alat,
 	myFd = 0;
 	courseChg = 0;
 	myjitter = jitter;
+	mydeviation = deviation;
 }
 
 void glider::setFd( int fd )
@@ -131,20 +133,20 @@ void glider::Straight( bool sim_heading )
 
 	float rnd = random();
 	printf("Random %f\n", rnd );
-	double speed = gVec.getSpeed().getKnots() * rnd;
+	double aspeed = gVec.getSpeed().getKnots() * rnd;
 	double head = Vector::normalizeDeg( gVec.getAngleDeg() * (( (rnd - 1.0)/3.0) + 1) );
 	lon += xDelta; // Länge
 	lat += yDelta; // Breite
 	altitude += climb;
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myPGRMZ.send( altitude, myFd );
-	myGPRMC.send( lat, lon, speed, head, myFd );
+	myGPRMC.send( lat, lon, aspeed, head, myFd );
 	myGPGSA.send();
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
 	if( sim_heading )
-		myXCVXC.send( heading + 4 );
+		myXCVXC.send( heading + mydeviation, speed );
 }
 
 void glider::setCircle(float radius, std::string direction )
@@ -224,5 +226,6 @@ void glider::Circle()
 	myGPGSA.send();
 	myGPGSA.send();
 	myGPGSA.send();
+        myXCVXC.send( heading + mydeviation, speed );
 }
 

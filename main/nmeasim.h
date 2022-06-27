@@ -22,5 +22,5 @@
 
 #include <string>
 
-void nmeasim(std::string mode, int time, float wind, float winddir, float heading, float jitter=0 );
+void nmeasim(std::string mode, int time, float wind, float winddir, float heading, float jitter=0, float deviation=0 );
 

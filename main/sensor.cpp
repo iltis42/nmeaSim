@@ -94,13 +94,16 @@ extern "C" void  app_main(void){
 	esp_log_level_set("*", ESP_LOG_INFO);
 	sensor( 0 );
 
-	float heading=0;
-
 	while( 1 ){
-		nmeasim( "cir", 180, 25, 90, heading, 8 );  // circle 3 min
-		nmeasim( "str_head", 120, 25, 90, heading, 8 );  // the fly straight 3 min
-		heading += 45;
-		heading = Vector::normalizeDeg( heading );
+		nmeasim( "cir", 180, 25, 90,   0,  0, 0    );  // circle 3 min, no deviation
+		nmeasim( "str_head", 120, 25, 90,  0, 0, 0    );  // the fly N straight 3 min
+		nmeasim( "str_head", 120, 25, 90, 45, 0, 4.2  );  // the fly NE straight 3 min
+		nmeasim( "str_head", 120, 25, 90, 90, 0, 6    );  // the fly E straight 3 min
+		nmeasim( "str_head", 120, 25, 90,135, 0, 4.2  );  // the fly SE straight 3 min
+		nmeasim( "str_head", 120, 25, 90,180, 0, 0    );  // the fly S straight 3 min
+		nmeasim( "str_head", 120, 25, 90,225, 0, -4.2 );  // the fly SW straight 3 min
+		nmeasim( "str_head", 120, 25, 90,270, 0, -6   );  // the fly W straight 3 min
+		nmeasim( "str_head", 120, 25, 90,315, 0, -4.2 );  // the fly NW straight 3 min
 	}
 
 	vTaskDelete( NULL );
