@@ -33,6 +33,16 @@ Vector::Vector() :
 {
 }
 
+double Vector::normalizePI(double angle)
+{
+	double a=angle;
+	while( a < -M_PI )
+		a += PI2;
+	while( a >= M_PI )
+		a -= PI2;
+	return a;
+}
+
 double Vector::normalize(double angle) {
     if (angle<0) return normalize(angle+PI2);
     if (angle>=PI2) return normalize(angle-PI2);
@@ -42,23 +52,26 @@ double Vector::normalize(double angle) {
 double Vector::polar(double y, double x)
 {
     double angle = 0.0;
-    //
-    //  dX = 0 ???
-    //
     if(x >= -0.001 && x <= 0.001)
     {
-        if(y < 0.0) return ( 1.5 * M_PI );
-        else  return ( 0.5 * M_PI );
+        if(y < 0.0)
+        	return ( M_PI );
+        else
+        	return ( 0 );
     }
 
     // Punkt liegt auf der neg. X-Achse
-    if(x < 0.0)  angle = atan( y / x ) + M_PI;
-    else  angle = atan( y / x );
+    if(x < 0.0)
+    	angle = atan( y / x ) + M_PI;
+    else
+    	angle = atan( y / x );
 
     // Neg. value not allowed.
-    if(angle < 0.0)  angle = PI2 + angle;
+    if(angle < 0.0)
+    	angle = PI2 + angle;
 
-    if(angle > (PI2))  angle = angle - (PI2);
+    if(angle > (PI2))
+    	angle = angle - (PI2);
 
     return angle;
 }

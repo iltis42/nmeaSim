@@ -61,6 +61,10 @@ void nmeasim( std::string mode, int time, float wind, float winddir, float aHead
          myGl.Straight( true );
       if( mode == "cir" )
         myGl.Circle();
+      if( mode == "cirR" )
+             myGl.Circle(false);
+      if( mode == "cirL" )
+             myGl.Circle(true);
       if( mode == "pos" )
         myGl.FixedPos();
       if( mode == "gpos" )

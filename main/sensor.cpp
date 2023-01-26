@@ -118,37 +118,68 @@ extern "C" void  app_main(void){
 	ESP_LOGI(FNAME,"225: %f", dev(225));
 	ESP_LOGI(FNAME,"270: %f", dev(270));
 
-
+	float winddir=0.0;
 	while( 1 ){
-		nmeasim( "cir", 120, 25, 90,   0,  0, 0  );
+		winddir = randHeading();
+ 		nmeasim( "cirR", 220, 25, winddir,   0,  0, 0  ); // ~ 32 seconds for a circle => ~7 circles, default average is 5
 		heading = randHeading();
-		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 60,  25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
 		heading = randHeading();
-		nmeasim( "str_head", 120, 25, 90, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
 
-		/*
-		nmeasim( "cir", 180, 25, 90,   0,  0, 0    );  // circle 3 min, no deviation
-		nmeasim( "str_head", 120, 25, 90,  0, 0, 0    );  // the fly N straight 3 min
-		nmeasim( "str_head", 120, 25, 90, 45, 0, 4.2  );  // the fly NE straight 3 min
-		nmeasim( "str_head", 120, 25, 90, 90, 0, 6    );  // the fly E straight 3 min
-		nmeasim( "str_head", 120, 25, 90,135, 0, 4.2  );  // the fly SE straight 3 min
-		nmeasim( "str_head", 120, 25, 90,180, 0, 0    );  // the fly S straight 3 min
-		nmeasim( "str_head", 120, 25, 90,225, 0, -4.2 );  // the fly SW straight 3 min
-		nmeasim( "str_head", 120, 25, 90,270, 0, -6   );  // the fly W straight 3 min
-		nmeasim( "str_head", 120, 25, 90,315, 0, -4.2 );  // the fly NW straight 3 min
-		*/
+		// winddir += 50.0;
+		// if( winddir >= 360 )
+		//	winddir = 0;
+		winddir = randHeading();
+		heading = randHeading();
+		nmeasim( "cirL", 220, 25, winddir,   0,  0, 0  ); // ~ 32 seconds for a circle => ~7 circles, default average is 5
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading )  );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60, 25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		heading = randHeading();
+		nmeasim( "str_head", 60,  25, winddir, heading,  0, dev( (double)heading ) );  // the fly N straight  min
+		// winddir += 50.0;
+		// if( winddir >= 360 )
+		//	winddir = 0;
 	}
 
 

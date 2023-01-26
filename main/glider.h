@@ -37,7 +37,7 @@ public:
   void setFd( int fd );
   void Straight( bool sim_heading=false );
   void setCircle( float radius, std::string direction );
-  void Circle();
+  void Circle( bool left=false );
   void FixedPos();
   void FixedPosGround();
   float random();

@@ -107,12 +107,22 @@ void glider::Straight( bool sim_heading )
 	cout << "Wind Speed:        " << wVec.getSpeed().getKph() << " km/h" << endl;
 	// cout << "winddir:           " << winddir << endl;
 	int wDir = int(wVec.getAngleDeg());
-	wDir += 180;
 
-	if(wDir > 360)
+
+	if(wDir >= 360)
 	{
 		wDir -= 360;
 	}
+	if(wDir < 0)
+	{
+		wDir += 360;
+	}
+    // as wind is specified in direction it comes from, the true vector needs opposite direction
+	if( wDir > 180 )
+		wDir -= 180;
+	if( wDir < 180 )
+		wDir += 180;
+
 
 	cout << "Wind Dir (From):   " << wDir << endl;
 	cout << "Speed (no wind)  : " << gVec.getSpeed().getKph() << " km/h" << endl;
@@ -134,7 +144,7 @@ void glider::Straight( bool sim_heading )
 	float rnd = random();
 	printf("Random %f\n", rnd );
 	double aspeed = gVec.getSpeed().getKnots() * rnd;
-	double head = Vector::normalizeDeg( gVec.getAngleDeg() * (( (rnd - 1.0)/3.0) + 1) );
+	double head = Vector::normalizeDeg( gVec.getAngleDeg() /* * (( (rnd - 1.0)/3.0) + 1) */);
 	lon += xDelta; // Länge
 	lat += yDelta; // Breite
 	altitude += climb;
@@ -146,7 +156,7 @@ void glider::Straight( bool sim_heading )
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
 	if( sim_heading )
-		myXCVXC.send( heading + mydeviation, speed );
+		myXCVXC.send( Vector::normalizeDeg( heading + mydeviation ), speed );
 }
 
 void glider::setCircle(float radius, std::string direction )
@@ -164,7 +174,7 @@ void glider::setCircle(float radius, std::string direction )
 	cout << "Heading chg per second: " << courseChg << " deg" << endl;
 }
 
-void glider::Circle()
+void glider::Circle( bool left )
 {
 	// Calculate wind vector
 	Vector wVec( (double)winddir*M_PI/180, Speed( wind*1000/3600 ) );
@@ -181,12 +191,20 @@ void glider::Circle()
 
 	// heading uses to change during circle
 	cout << "Initial Heading:   " << heading << endl;
-	heading += courseChg;
+	if( left )
+		heading -= courseChg;
+	else
+		heading += courseChg;
 
 	if( heading > 360 )
 	{
 		heading -= 360;
+	}else if( heading < 0 )
+	{
+		heading += 360;
 	}
+
+
 	cout << "Changed Heading:   " << heading << endl;
 	// Calculate new glider vector
 	Vector gVec( (double)heading*M_PI/180, Speed( speed*1000/3600 ) );
@@ -200,7 +218,7 @@ void glider::Circle()
 
 	float rnd = random();
 	printf("Random %f\n", rnd );
-	double angW = Vector::normalizeDeg( gVec.getAngleDeg() * (( (rnd - 1.0)/3.0) + 1) );
+	double angW = Vector::normalizeDeg( gVec.getAngleDeg() /* * (( (rnd - 1.0)/3.0) + 1) */);
 	double yDelta = gVec.getY().getKnots()/(3600*60.0); // this is Y in vector
 	double xDelta = (gVec.getX().getKnots()/(3600*60.0)) /cos(lat*M_PI/180.0);
 
@@ -226,6 +244,6 @@ void glider::Circle()
 	myGPGSA.send();
 	myGPGSA.send();
 	myGPGSA.send();
-        myXCVXC.send( heading + mydeviation, speed );
+        myXCVXC.send( Vector::normalizeDeg( heading + mydeviation), speed );
 }
 
