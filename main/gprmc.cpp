@@ -36,7 +36,7 @@ void dms_format(double lat, char *buf)
   // int min = (int)minutes;
   // int sec = (int)((minutes - (double)min )*100);
 
-  sprintf( buf, "%02d%02.2f", deg, minutes );
+  sprintf( buf, "%02d%05.2f", deg, minutes );
 }
 
 
@@ -77,8 +77,8 @@ int GPRMC::send( double lat, double lon, float speed, float course, int fd )
 	int time_m = (time/60)%60;
 	int time_s = time%60;
 
-	char dms_lat[10];
-	char dms_lon[10];
+	char dms_lat[32];
+	char dms_lon[32];
 	dms_format( lat, dms_lat );
 	dms_format( lon, dms_lon );
 
