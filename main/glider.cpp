@@ -155,6 +155,7 @@ void glider::Straight( bool sim_heading )
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
+	myPFLAA.send(0,0,"AABBCC");
 	if( sim_heading )
 		myXCVXC.send( Vector::normalizeDeg( heading + mydeviation ), speed );
 }
@@ -244,6 +245,7 @@ void glider::Circle( bool left )
 	myGPGSA.send();
 	myGPGSA.send();
 	myGPGSA.send();
-        myXCVXC.send( Vector::normalizeDeg( heading + mydeviation), speed );
+	myPFLAA.send(0,0,"AABBCC");
+    myXCVXC.send( Vector::normalizeDeg( heading + mydeviation), speed );
 }
 

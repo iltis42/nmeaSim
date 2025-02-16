@@ -27,6 +27,7 @@
 #include "pgrmz.h"
 #include "gpgsa.h"
 #include "xcvxc.h"
+#include "pflaa.h"
 
 class glider
 {
@@ -50,6 +51,7 @@ private:
   PGRMZ myPGRMZ;
   GPGSA myGPGSA;
   XCVXC myXCVXC;
+  PFLAA myPFLAA;
   double &lat;
   double &lon;
   float  &speed;
