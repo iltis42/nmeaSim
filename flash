@@ -1,4 +1,4 @@
-if [ $2 == "-e" ]; then
+if [ "$2" == "-e" ]; then
 echo "Erasing Flash"
 esptool.py --chip esp32 -p /dev/ttyUSB0 -b 460800 erase_flash
 echo "Flashing $1"

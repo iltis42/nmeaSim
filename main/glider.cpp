@@ -156,6 +156,7 @@ void glider::Straight( bool sim_heading )
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myGPGGA.send( lat, lon, altitude, myFd );
 	myPFLAA.send(0,0,"AABBCC");
+	myPFLAU.send(3);  // GPS Status 3D
 	if( sim_heading )
 		myXCVXC.send( Vector::normalizeDeg( heading + mydeviation ), speed );
 }
@@ -246,6 +247,7 @@ void glider::Circle( bool left )
 	myGPGSA.send();
 	myGPGSA.send();
 	myPFLAA.send(0,0,"AABBCC");
+	myPFLAU.send(3);  // GPS Status 3D
     myXCVXC.send( Vector::normalizeDeg( heading + mydeviation), speed );
 }
 
